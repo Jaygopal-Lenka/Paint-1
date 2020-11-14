@@ -1,0 +1,110 @@
+<html>
+<head>  
+    <title>Painter1</title>
+</head>
+<body class="body_backgorund">
+
+<div align="center">
+<h1>Paint</h1>
+
+    <canvas id="myCanvas" width="800" height="600"></canvas>
+        <br><br >
+
+<!--Additional activity -->
+        <span>Color - </span>  
+        <input type="text" id="color">
+        
+        <span>Width Of the line  - </span>  
+        <input type="text" id="width_of_line">
+        <input type="text" id="radius">
+        
+        <button onclick="clearArea();">Clear Area</button>
+
+    </div>
+</body>
+</html>
+<style>
+    .body_backgorund {
+    background-image: url("bg1.jpg");
+    background-position: center;
+    background-size: cover;
+  }
+  body{
+    cursor: pointer;
+  }
+  h1
+  {
+      color: red; 
+      font-size: 40px;
+  }
+  #myCanvas
+  {
+      border-width:10px;
+      background-color: white; 
+      border-style:ridge;
+  }
+
+  button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 42px;
+    font-size: 16px;
+  }
+
+  input
+  {
+    margin-right: 20px;
+  }
+  
+</style>
+
+<script>
+   var mousepush="empty";
+   var lastposition_of_x, lastposition_of_y;
+
+   canvas= document.getElementById("myCanvas");
+   ctx = canvas.getContext("2d");
+
+   color="black";
+   width_of_line=2;
+   canvas.addEventListener("mousedown",my_mousedown);
+    //First function
+   function my_mousedown(e)
+   {
+       color=document.getElementById("color").value;
+       width_of_line=document.getElementById("width_of_line").value;
+       radius= document.getElementById("radius").value;
+       mousepush="mouseDown";
+   }
+   canvas.addEventListener("mousemove",my_mousemove);
+//Second function
+function my_mousemove(e)
+{
+    current_position_of_mouse_x=e.clientX-canvas.offsetLeft;
+    current_position_of_mouse_y=e.clientY-canvas.offsetTop;
+
+    if(mousepush=="mouseDown") {
+        ctx.beginPath();
+        ctx.strokeStyle=color;
+        ctx.lineWidth=width_of_line;
+        ctx.arc(current_position_of_mouse_x, current_position_of_mouse_y,radius,0,2 * Math.PI);
+        ctx.stroke();
+    }
+}
+canvas.addEventListener("mouseup",my_mouseup);
+function my_mouseup(e)
+{
+    mousepush="mouseUP";
+}
+canvas.addEventListener("mouseleave",my_mouseleave);
+
+function my_mouseleave(e)
+{
+    mousepush="mouseleave";
+}
+
+function clearArea(){
+    ctx.clearRect(0,0,ctx.canvas.width,ctx.canvas.height);
+}
+</script>
